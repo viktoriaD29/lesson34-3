@@ -9,6 +9,12 @@ const formDate = new FormData(formElem);
 
 const onFormClick = (e) => {
   e.preventDefault();
+
+  const statusInput = formElem.reportValidity();
+  if (!statusInput) {
+    buttunElem === disabled;
+  }
+  
   const baseUrl = 'https://60d5f912943aa60017768d3c.mockapi.io/api/v1/forms';
 
   fetch(baseUrl, {
@@ -34,10 +40,7 @@ const onFormClick = (e) => {
   nameElem.innerHTML = '';
   passElem.innerHTML = '';
 
-  const statusInput = formElem.reportValidity();
-  if (!statusInput) {
-    buttunElem === disabled;
-  }
+  
 };
 
 formElem.addEventListener('submit', onFormClick);
