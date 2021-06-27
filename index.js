@@ -5,45 +5,50 @@ const passElem = document.querySelector('#password');
 const errorElem = document.querySelector('.error-text');
 const buttunElem = document.querySelector('.submit-button');
 
-const formDate = new FormData(formElem);
+const baseUrl = 'https://60d5f912943aa60017768d3c.mockapi.io/api/v1/forms';
 
-const onFormClick = (e) => {
-  e.preventDefault();
-
-  const statusInput = formElem.reportValidity();
-  if (!statusInput) {
-    buttunElem === disabled;
-  }
-  
-  const baseUrl = 'https://60d5f912943aa60017768d3c.mockapi.io/api/v1/forms';
-
+const createUser = (newUser) => {
   fetch(baseUrl, {
     method: 'POST',
     headers: {
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'application/json;charset=utf-8',
     },
-    body: JSON.stringify(formDate),
-  }).then((responce) => {
-    try {
-      alert(JSON.stringify(responce));
-    } catch {
-      errorElem.innerHTML = 'Failed to create user';
-    }
+    body: JSON.stringify(newUser),
   });
-
-  /*const formDate = [...new FormData(formElem)]
-    .reduce((acc, [field, value]) => ({...acc, [field]: value}), {})
-
-  alert(JSON.stringify(formDate))*/
-
-  emailElem.innerHTML = '';
-  nameElem.innerHTML = '';
-  passElem.innerHTML = '';
-
-  
 };
 
-formElem.addEventListener('submit', onFormClick);
+const getUsers = () => {
+  fetch(baseUrl).then((responce) => responce.json());
+};
+
+const onSubmitClick = (e) => {
+  e.preventDefault();
+
+  const emailText = emailElem.value;
+  const nameText = nameElem.value;
+  const passText = passElem.value;
+
+  const statusInput = formElem.reportValidity();
+  if (!statusInput) {
+    return;
+  }
+
+  emailElem.value = '';
+  nameElem.value = '';
+  passElem.value = '';
+
+  const newUser = {
+    email: emailText,
+    name: nameText,
+    password: passText,
+  };
+
+  createUser(newUser)
+    .then(() => getUsers())
+    .then((responce) => alert(JSON.stringify(responce)));
+};
+
+formElem.addEventListener('submit', onSubmitClick);
 
 /*const emailInputElem = document.querySelector('#email');
 const passwordInputElem = document.querySelector('#password');
