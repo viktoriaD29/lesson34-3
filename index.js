@@ -8,7 +8,7 @@ const buttunElem = document.querySelector('.submit-button');
 const baseUrl = 'https://60d5f912943aa60017768d3c.mockapi.io/api/v1/forms';
 
 const createUser = (newUser) => {
-  fetch(baseUrl, {
+  return fetch(baseUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -18,7 +18,7 @@ const createUser = (newUser) => {
 };
 
 const getUsers = () => {
-  fetch(baseUrl).then((responce) => responce.json());
+  return fetch(baseUrl).then((responce) => responce.json());
 };
 
 const onSubmitClick = (e) => {
@@ -30,7 +30,7 @@ const onSubmitClick = (e) => {
 
   const statusInput = formElem.reportValidity();
   if (!statusInput) {
-    return;
+    buttunElem = disabled
   }
 
   emailElem.value = '';
@@ -43,7 +43,7 @@ const onSubmitClick = (e) => {
     password: passText,
   };
 
-  createUser(newUser)
+  return createUser(newUser)
     .then(() => getUsers())
     .then((responce) => alert(JSON.stringify(responce)));
 };
