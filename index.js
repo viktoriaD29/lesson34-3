@@ -8,7 +8,7 @@ const buttonElem = document.querySelector('.submit-button');
 const onSubmitClick = (e) => {
   e.preventDefault();
 
-  const baseUrl = 'https://60d5f912943aa60017768d3c.mockapi.io/api/v1/forms';
+  const baseUrl = 'https://60d5f912943aa60017768d3c.mockapi.io/api/v1/form';
 
   const createUser = (newUser) => {
     return fetch(baseUrl, {
@@ -33,6 +33,9 @@ const onSubmitClick = (e) => {
       emailElem.value = '';
       nameElem.value = '';
       passElem.value = '';
+    })
+    .catch((error) => {
+      errorElem.textContent = 'Failed to create user';
     });
 };
 
@@ -40,10 +43,10 @@ const onInputChange = () => {
   const isValidForm = formElem.reportValidity();
   if (isValidForm) {
     buttonElem.removeAttribute('disabled');
-    errorElem.textContent = 'Failed to create user';
+    //errorElem.textContent = 'Failed to create user';
   } else {
     buttonElem.setAttribute('disabled', true);
-    errorElem.textContent = 'Failed to create user';
+    //errorElem.textContent = 'Failed to create user';
   }
 };
 formElem.addEventListener('submit', onSubmitClick);
