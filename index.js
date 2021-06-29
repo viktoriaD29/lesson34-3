@@ -3,44 +3,44 @@ const emailElem = document.querySelector('#email');
 const nameElem = document.querySelector('#name');
 const passElem = document.querySelector('#password');
 const errorElem = document.querySelector('.error-text');
-const buttunElem = document.querySelector('.submit-button');
+const buttonElem = document.querySelector('.submit-button');
 
-const baseUrl = 'https://60d5f912943aa60017768d3c.mockapi.io/api/v1/forms';
-
-const createUser = (newUser) => {
-  return fetch(baseUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-    },
-    body: JSON.stringify(newUser),
-  });
-};
-
-const getUsers = () => {
-  return fetch(baseUrl).then((responce) => responce.json());
-};
+formElem.addEventListener('change', () => {
+  if (formElem.reportValidity()) buttonElem.removeAttribute('disabled');
+});
 
 const onSubmitClick = (e) => {
   e.preventDefault();
 
-  if (formElem.reportValidity()) {
-    buttunElem.disabled = true;
-  }
+  const baseUrl = 'https://60d5f912943aa60017768d3c.mockapi.io/api/v1/forms';
+
+  const createUser = (newUser) => {
+    return fetch(baseUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify(newUser),
+    });
+  };
+
+  const getUsers = () => {
+    return fetch(baseUrl).then((responce) => responce.json());
+  };
 
   const emailText = emailElem.value;
   const nameText = nameElem.value;
   const passText = passElem.value;
-
-  emailElem.value = '';
-  nameElem.value = '';
-  passElem.value = '';
 
   const newUser = {
     email: emailText,
     name: nameText,
     password: passText,
   };
+
+  emailElem.value = '';
+  nameElem.value = '';
+  passElem.value = '';
 
   return createUser(newUser)
     .then(() => getUsers())
