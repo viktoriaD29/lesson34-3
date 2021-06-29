@@ -30,7 +30,7 @@ const onSubmitClick = (e) => {
     return fetch(baseUrl).then((responce) => responce.json());
   };
 
-  const formData = Object.fromEntries(new FormData(formElem));
+  const formData = JSON.stringify(Object.fromEntries(new FormData(formElem)));
 
   const newUser = {
     formData,
@@ -50,6 +50,7 @@ const onSubmitClick = (e) => {
     });
 };
 formElem.addEventListener('submit', onSubmitClick);
+
 
 /*const emailInputElem = document.querySelector('#email');
 const passwordInputElem = document.querySelector('#password');
