@@ -24,14 +24,13 @@ const getUsers = () => {
 const onSubmitClick = (e) => {
   e.preventDefault();
 
+  if (formElem.reportValidity()) {
+    buttunElem.disabled = true;
+  }
+
   const emailText = emailElem.value;
   const nameText = nameElem.value;
   const passText = passElem.value;
-
-  const statusInput = formElem.reportValidity();
-  if (!statusInput) {
-    buttunElem = disabled
-  }
 
   emailElem.value = '';
   nameElem.value = '';
@@ -45,7 +44,14 @@ const onSubmitClick = (e) => {
 
   return createUser(newUser)
     .then(() => getUsers())
-    .then((responce) => alert(JSON.stringify(responce)));
+    .then((responce) => {
+      if (!responce.ok) {
+        errorElem.textContent = 'Failed to create user';
+      } else {
+        errorElem.value = '';
+      }
+      alert(JSON.stringify(responce));
+    });
 };
 
 formElem.addEventListener('submit', onSubmitClick);
@@ -54,6 +60,19 @@ formElem.addEventListener('submit', onSubmitClick);
 const passwordInputElem = document.querySelector('#password');
 const emailErrorElem = document.querySelector('.error-text_email');
 const passwordErrorElem = document.querySelector('.error-text_password');
+
+if (!responce.ok) {
+        errorElem.textContent = 'Failed to create user';
+      } else {
+        errorElem.value = '';
+      }
+      alert(JSON.stringify(responce));
+
+ try {
+        alert(JSON.stringify(responce))
+      } catch {
+        errorElem.textContent = 'Failed to create user';
+      }
 
 const isRequired = value => value 
   ? undefined
